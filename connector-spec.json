@@ -1,0 +1,495 @@
+{
+    "name": "Unified Multi-Source Entitlement Orchestration Connector",
+    "keyType": "simple",
+    "supportsStatefulCommands": true,
+    "commands": [
+        "std:test-connection",
+        "std:source-data:discover",
+        "std:source-data:read",
+        "std:entitlement:list",
+        "std:entitlement:read"
+    ],
+    "sourceConfig": [
+        {
+            "name": "General",
+            "key": "general",
+            "sections": [
+                {
+                    "name": "Execution Controls",
+                    "fields": [
+                        {
+                            "type": "select",
+                            "key": "executionMode",
+                            "label": "Execution Mode",
+                            "options": [
+                                {
+                                    "label": "Group Only",
+                                    "value": "groupOnly"
+                                },
+                                {
+                                    "label": "Role Creation",
+                                    "value": "roleCreation"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "checkbox",
+                            "key": "dryRun",
+                            "label": "Dry Run"
+                        },
+                        {
+                            "type": "number",
+                            "key": "maxExecutionLimit",
+                            "label": "Max Execution Limit"
+                        },
+                        {
+                            "type": "number",
+                            "key": "pageSize",
+                            "label": "Page Size"
+                        },
+                        {
+                            "type": "number",
+                            "key": "requestDelayMs",
+                            "label": "Request Delay (ms)"
+                        },
+                        {
+                            "type": "checkbox",
+                            "key": "spConnEnableStatefulCommands",
+                            "label": "Enable Stateful Commands"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Naming",
+            "key": "naming",
+            "sections": [
+                {
+                    "name": "Naming Rules",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "key": "prefix",
+                            "label": "Prefix"
+                        },
+                        {
+                            "type": "text",
+                            "key": "suffix",
+                            "label": "Suffix"
+                        },
+                        {
+                            "type": "select",
+                            "key": "caseStyle",
+                            "label": "Case Style",
+                            "options": [
+                                {
+                                    "label": "Upper",
+                                    "value": "upper"
+                                },
+                                {
+                                    "label": "Lower",
+                                    "value": "lower"
+                                },
+                                {
+                                    "label": "Capitalize",
+                                    "value": "capitalize"
+                                },
+                                {
+                                    "label": "Camel",
+                                    "value": "camel"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "select",
+                            "key": "separator",
+                            "label": "Separator",
+                            "options": [
+                                {
+                                    "label": "Underscore",
+                                    "value": "underscore"
+                                },
+                                {
+                                    "label": "Hyphen",
+                                    "value": "hyphen"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Sources",
+            "key": "sources",
+            "sections": [
+                {
+                    "name": "Source Definitions",
+                    "fields": [
+                        {
+                            "type": "cardList",
+                            "key": "sources",
+                            "label": "Sources",
+                            "itemLabel": "Source",
+                            "fields": [
+                                {
+                                    "type": "text",
+                                    "key": "sourceKey",
+                                    "label": "Source Key"
+                                },
+                                {
+                                    "type": "url",
+                                    "key": "baseUrl",
+                                    "label": "Base URL"
+                                },
+                                {
+                                    "type": "list",
+                                    "key": "groupTypes",
+                                    "label": "Group Types",
+                                    "itemType": "text"
+                                },
+                                {
+                                    "type": "select",
+                                    "key": "authType",
+                                    "label": "Authentication Type",
+                                    "options": [
+                                        {
+                                            "label": "Basic",
+                                            "value": "basic"
+                                        },
+                                        {
+                                            "label": "OAuth 2.0",
+                                            "value": "oauth2"
+                                        },
+                                        {
+                                            "label": "API Key",
+                                            "value": "apiKey"
+                                        },
+                                        {
+                                            "label": "JWT",
+                                            "value": "jwt"
+                                        },
+                                        {
+                                            "label": "Service Account",
+                                            "value": "serviceAccount"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "basicUsername",
+                                    "label": "Basic Username"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "basicPassword",
+                                    "label": "Basic Password"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "oauthClientId",
+                                    "label": "OAuth Client ID"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "oauthClientSecret",
+                                    "label": "OAuth Client Secret"
+                                },
+                                {
+                                    "type": "secrettextarea",
+                                    "key": "oauthRefreshToken",
+                                    "label": "OAuth Refresh Token"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "apiKey",
+                                    "label": "API Key"
+                                },
+                                {
+                                    "type": "secrettextarea",
+                                    "key": "jwtSigningKey",
+                                    "label": "JWT Signing Key"
+                                },
+                                {
+                                    "type": "secrettextarea",
+                                    "key": "serviceAccountKey",
+                                    "label": "Service Account Key"
+                                },
+                                {
+                                    "type": "keyValue",
+                                    "key": "headers",
+                                    "label": "Custom Headers"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Targets",
+            "key": "targets",
+            "sections": [
+                {
+                    "name": "Target Definitions",
+                    "fields": [
+                        {
+                            "type": "cardList",
+                            "key": "targets",
+                            "label": "Targets",
+                            "itemLabel": "Target",
+                            "fields": [
+                                {
+                                    "type": "text",
+                                    "key": "targetKey",
+                                    "label": "Target Key"
+                                },
+                                {
+                                    "type": "select",
+                                    "key": "targetType",
+                                    "label": "Target Type",
+                                    "options": [
+                                        {
+                                            "label": "SCIM",
+                                            "value": "scim"
+                                        },
+                                        {
+                                            "label": "Okta",
+                                            "value": "okta"
+                                        },
+                                        {
+                                            "label": "Google",
+                                            "value": "google"
+                                        },
+                                        {
+                                            "label": "AWS",
+                                            "value": "aws"
+                                        },
+                                        {
+                                            "label": "ServiceNow",
+                                            "value": "servicenow"
+                                        },
+                                        {
+                                            "label": "Workflow",
+                                            "value": "workflow"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "text",
+                                    "key": "scimBaseUrl",
+                                    "label": "SCIM Base URL"
+                                },
+                                {
+                                    "type": "text",
+                                    "key": "scimGroupsPath",
+                                    "label": "SCIM Groups Path"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "scimBearerToken",
+                                    "label": "SCIM Bearer Token"
+                                },
+                                {
+                                    "type": "url",
+                                    "key": "oktaOrgUrl",
+                                    "label": "Okta Org URL"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "oktaApiToken",
+                                    "label": "Okta API Token"
+                                },
+                                {
+                                    "type": "secrettextarea",
+                                    "key": "googleServiceAccount",
+                                    "label": "Google Service Account JSON"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "awsAccessKeyId",
+                                    "label": "AWS Access Key ID"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "awsSecretAccessKey",
+                                    "label": "AWS Secret Access Key"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "serviceNowUser",
+                                    "label": "ServiceNow Username"
+                                },
+                                {
+                                    "type": "secret",
+                                    "key": "serviceNowPassword",
+                                    "label": "ServiceNow Password"
+                                },
+                                {
+                                    "type": "url",
+                                    "key": "serviceNowInstanceUrl",
+                                    "label": "ServiceNow Instance URL"
+                                },
+                                {
+                                    "type": "text",
+                                    "key": "workflowName",
+                                    "label": "Workflow Name"
+                                },
+                                {
+                                    "type": "keyValue",
+                                    "key": "workflowInputs",
+                                    "label": "Workflow Inputs"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Role Model",
+            "key": "roleModel",
+            "sections": [
+                {
+                    "name": "Role Modeling",
+                    "fields": [
+                        {
+                            "type": "select",
+                            "key": "roleEligibility",
+                            "label": "Role Eligibility",
+                            "options": [
+                                {
+                                    "label": "Any",
+                                    "value": "any"
+                                },
+                                {
+                                    "label": "All",
+                                    "value": "all"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "keyValue",
+                            "key": "roleControls",
+                            "label": "Role Controls"
+                        },
+                        {
+                            "type": "list",
+                            "key": "segmentInclusion",
+                            "label": "Segment Inclusion",
+                            "itemType": "text"
+                        },
+                        {
+                            "type": "keyValue",
+                            "key": "requestableByType",
+                            "label": "Requestable By Type"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Static Attributes",
+            "key": "staticAttributes",
+            "sections": [
+                {
+                    "name": "Static Entitlement Attributes",
+                    "fields": [
+                        {
+                            "type": "keyValue",
+                            "key": "staticAttributes",
+                            "label": "Static Attributes"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Advanced",
+            "key": "advanced",
+            "sections": [
+                {
+                    "name": "Advanced Settings",
+                    "fields": [
+                        {
+                            "type": "select",
+                            "key": "logLevel",
+                            "label": "Log Level",
+                            "options": [
+                                {
+                                    "label": "Info",
+                                    "value": "info"
+                                },
+                                {
+                                    "label": "Debug",
+                                    "value": "debug"
+                                },
+                                {
+                                    "label": "Error",
+                                    "value": "error"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sourceConfigInitialValues": {
+        "executionMode": "groupOnly",
+        "dryRun": true,
+        "maxExecutionLimit": 10000,
+        "pageSize": 200,
+        "requestDelayMs": 0,
+        "caseStyle": "lower",
+        "separator": "underscore",
+        "prefix": "",
+        "suffix": "",
+        "spConnEnableStatefulCommands": true,
+        "logLevel": "info",
+        "roleEligibility": "any"
+    },
+    "entitlementSchemas": [
+        {
+            "type": "group",
+            "displayAttribute": "name",
+            "identityAttribute": "id",
+            "attributes": [
+                {
+                    "name": "id",
+                    "type": "string"
+                },
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "source",
+                    "type": "string"
+                },
+                {
+                    "name": "groupType",
+                    "type": "string"
+                },
+                {
+                    "name": "normalizedName",
+                    "type": "string"
+                },
+                {
+                    "name": "roleEligible",
+                    "type": "boolean"
+                },
+                {
+                    "name": "roleName",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}
+
